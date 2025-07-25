@@ -1,8 +1,10 @@
-const path = require("path")
+const tailwindcss = require("tailwindcss")
+const radixPlugin = require("tailwindcss-radix")
+const medusaUiPreset = require("@medusajs/ui-preset")
 
 module.exports = {
   darkMode: "class",
-  presets: [require("@medusajs/ui-preset")],
+  presets: [medusaUiPreset],
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx}",
@@ -158,5 +160,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-radix")()],
+  plugins: [radixPlugin({})],
 }
