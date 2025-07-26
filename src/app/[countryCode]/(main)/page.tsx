@@ -4,12 +4,14 @@ import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
+import { generateSEOMetadata } from "@lib/metadata"
 
-export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Stories in Every Stitch",
   description:
-    "A performant frontend ecommerce starter template with Next.js 15 and Medusa.",
-}
+    "Crafting wearable heritage rooted in artisanal wisdom and soil-bound cultures from across the world.",
+  canonical: "https://soilstories.co",
+})
 
 export default async function Home(props: {
   params: Promise<{ countryCode: string }>
@@ -30,12 +32,10 @@ export default async function Home(props: {
 
   return (
     <>
-      <Hero />
-      <div className="py-12">
-        <ul className="flex flex-col gap-x-6">
-          <FeaturedProducts collections={collections} region={region} />
-        </ul>
-      </div>
+      <main className="min-h-screen">
+        <Hero />
+        <FeaturedProducts collections={collections} region={region} />
+      </main>
     </>
   )
 }

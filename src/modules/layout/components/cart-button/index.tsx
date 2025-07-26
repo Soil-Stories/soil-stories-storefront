@@ -1,8 +1,13 @@
-import { retrieveCart } from "@lib/data/cart"
+"use client"
+
+import useCartClient from "@lib/hooks/use-cart-client"
 import CartDropdown from "../cart-dropdown"
 
-export default async function CartButton() {
-  const cart = await retrieveCart().catch(() => null)
+export default function CartButton() {
+  const { cart, loading } = useCartClient()
+
+  // Optional: show loading spinner or skeleton
+  if (loading) return null
 
   return <CartDropdown cart={cart} />
 }

@@ -38,7 +38,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.example.com",
+        hostname: "res.cloudinary.com",
       },
     ],
   },

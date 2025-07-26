@@ -66,3 +66,10 @@ export const noDivisionCurrencies = [
   "xdr",
   "xau",
 ]
+
+export const navItems = [
+  { name: "Store", href: "/store" },
+  { name: "Studio", href: "/studio" },
+  { name: "Stories", href: "/stories" },
+  { name: "Your Story", href: "/share-your-soil-story" },
+]
