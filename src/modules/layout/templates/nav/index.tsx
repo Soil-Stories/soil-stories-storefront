@@ -55,7 +55,6 @@ const Nav = () => {
                 className="relative text-base font-medium text-soil-charcoal transition-all duration-300 hover:text-soil-indigo-mud group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-soil-terracotta transition-all duration-300 group-hover:w-full" />
               </LocalizedClientLink>
             ))}
           </div>

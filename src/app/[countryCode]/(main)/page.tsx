@@ -2,9 +2,13 @@ import { Metadata } from "next"
 
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
+import { NewsletterSection } from "@modules/home/components/newsletter-section"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import { generateSEOMetadata } from "@lib/metadata"
+import { StoriesPreviewSection } from "@modules/home/components/stories-preview-section"
+import { JournalSection } from "@modules/home/components/journal-section"
+import { TestimonialsSection } from "@modules/home/components/testimonials-section"
 
 export const metadata: Metadata = generateSEOMetadata({
   title: "Stories in Every Stitch",
@@ -35,6 +39,10 @@ export default async function Home(props: {
       <main className="min-h-screen">
         <Hero />
         <FeaturedProducts collections={collections} region={region} />
+        <StoriesPreviewSection />
+        <JournalSection />
+        <TestimonialsSection />
+        <NewsletterSection />
       </main>
     </>
   )
