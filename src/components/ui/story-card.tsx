@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Card } from "@components/ui/card"
 import { Badge } from "@components/ui/badge"
 import { cn } from "@lib/util/tailwind"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 interface Story {
   id: string
@@ -33,7 +34,7 @@ export function StoryCard({ story, index = 0, className }: StoryCardProps) {
         className,
       )}
     >
-      <Link href={`/stories/${story.id}`} className="block h-full">
+      <LocalizedClientLink href={`/stories/${story.id}`} className="block h-full">
         <div className="relative h-80 md:h-96 overflow-hidden">
           {/* Background Image */}
           <div
@@ -70,7 +71,7 @@ export function StoryCard({ story, index = 0, className }: StoryCardProps) {
             <p className="text-sm italic opacity-95 leading-relaxed line-clamp-2">{story.description}</p>
           </div>
         </div>
-      </Link>
+      </LocalizedClientLink>
     </Card>
   )
 }

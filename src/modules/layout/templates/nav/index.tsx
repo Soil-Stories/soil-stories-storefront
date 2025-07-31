@@ -18,7 +18,7 @@ const Nav = () => {
   const { regions, loading } = useRegions()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { user, isLoggedIn, logout, isLoading } = useAuth()
+  const { customer, isLoggedIn, logout, isLoading } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -63,7 +63,7 @@ const Nav = () => {
             {!isLoading && (
               <UserMenuPopover
                 isLoggedIn={isLoggedIn}
-                user={user || undefined}
+                customer={customer || undefined}
                 onLogout={logout}
               />
             )}

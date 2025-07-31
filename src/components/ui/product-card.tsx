@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@components/ui/card"
 import { Badge } from "@components/ui/badge"
 import { Button } from "@components/ui/button"
 import { cn } from "@lib/util/tailwind"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 interface Product {
   id: string
@@ -39,7 +40,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         className,
       )}
     >
-      <Link href={`/products/${product.id}`}>
+      <LocalizedClientLink href={`/products/${product.id}`}>
         {/* Image Container */}
         <div className="relative h-64 overflow-hidden">
           <div
@@ -79,7 +80,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             </button>
           </div>
         </div>
-      </Link>
+      </LocalizedClientLink>
 
       <CardContent className="flex-1 p-6 bg-white">
         {/* Region */}

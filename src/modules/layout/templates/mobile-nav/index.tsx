@@ -19,7 +19,7 @@ export default function MobileNav({
   setMobileMenuOpen,
   regions,
 }: MobileNavProps) {
-  const { user, isLoggedIn, logout, isLoading } = useAuth()
+  const { isLoggedIn, logout } = useAuth()
 
   return (
     <div

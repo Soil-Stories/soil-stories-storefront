@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react"
 import { cn } from "@lib/util/tailwind"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 interface CarouselSlide {
   id: number
@@ -181,7 +182,7 @@ export default function Hero() {
                       isLoaded && index === activeIndex && "opacity-100 translate-y-0",
                     )}
                   >
-                    <Link
+                    <LocalizedClientLink
                       href={slide.buttonLink}
                       className={cn(
                         "inline-flex items-center px-8 py-4 rounded-full text-base md:text-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-medium",
@@ -192,7 +193,7 @@ export default function Hero() {
                     >
                       {slide.buttonText}
                       <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                    </LocalizedClientLink>
                   </div>
                 </div>
               </div>

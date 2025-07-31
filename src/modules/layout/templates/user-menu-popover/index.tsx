@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import Link from "next/link"
 import {
   User,
   Package,
@@ -12,19 +11,20 @@ import {
   LogOut,
 } from "lucide-react"
 import { cn } from "@lib/util/tailwind"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { HttpTypes } from "@medusajs/types"
 
 interface UserMenuProps {
   isLoggedIn: boolean
-  user?: {
-    id: string
-    name: string
-    email: string
-    phone: string
-  }
+  customer?: HttpTypes.StoreCustomer | null
   onLogout: () => void
 }
 
-export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
+export function UserMenuPopover({
+  isLoggedIn,
+  customer,
+  onLogout,
+}: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -79,7 +79,7 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
     {
       icon: User,
       label: "Sign In / Join",
-      href: "/login",
+      href: "/account",
     },
     {
       icon: Package,
@@ -121,6 +121,8 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
     },
   ]
 
+  const customerName = `${customer?.first_name} ${customer?.last_name}`
+
   return (
     <div className="relative">
       <button
@@ -133,13 +135,15 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
             "bg-soil-terracotta text-white hover:bg-soil-terracotta/90"
         )}
         aria-label={
-          isLoggedIn ? `Account menu for ${user?.name}` : "Account menu"
+          isLoggedIn ? `Account menu for ${customerName}` : "Account menu"
         }
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        {isLoggedIn && user ? (
-          <span className="text-xs font-medium">{getInitials(user.name)}</span>
+        {isLoggedIn && customer ? (
+          <span className="text-xs font-medium">
+            {getInitials(customerName)}
+          </span>
         ) : (
           <User className="h-5 w-5" aria-hidden="true" />
         )}
@@ -158,13 +162,13 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
           aria-labelledby="user-menu-button"
         >
           <div className="py-1">
-            {isLoggedIn && user && (
+            {isLoggedIn && customer && (
               <>
                 <div className="px-4 py-3 border-b border-soil-clay-dark">
                   <p className="text-sm font-medium text-soil-charcoal">
-                    {user.name}
+                    {customerName}
                   </p>
-                  <p className="text-xs text-soil-charcoal/70">{user.email}</p>
+                  <p className="text-xs text-soil-charcoal/70">{customer?.email}</p>
                 </div>
               </>
             )}
@@ -172,7 +176,7 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
             {(isLoggedIn ? loggedInItems : loggedOutItems).map((item) => {
               const Icon = item.icon
               return (
-                <Link
+                <LocalizedClientLink
                   key={item.href}
                   href={item.href}
                   className={cn(
@@ -184,7 +188,7 @@ export function UserMenuPopover({ isLoggedIn, user, onLogout }: UserMenuProps) {
                 >
                   <Icon className="mr-3 h-4 w-4" aria-hidden="true" />
                   {item.label}
-                </Link>
+                </LocalizedClientLink>
               )
             })}
 

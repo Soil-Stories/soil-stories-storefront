@@ -1,64 +1,52 @@
-import { login } from "@lib/data/customer"
+import type { Metadata } from "next"
+import { generateSEOMetadata } from "@lib/metadata"
+import { LoginForm } from "@modules/account/components/login/login-form"
+import { Section } from "@components/ui/section"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
-import ErrorMessage from "@modules/checkout/components/error-message"
-import { SubmitButton } from "@modules/checkout/components/submit-button"
-import Input from "@modules/common/components/input"
-import { useActionState } from "react"
 
-type Props = {
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Sign In",
+  description:
+    "Sign in or join SoilStories using your phone number and a one-time code.",
+  canonical: "https://soilstories.co/login",
+})
+
+type LoginProps = {
   setCurrentView: (view: LOGIN_VIEW) => void
-}
+};
 
-const Login = ({ setCurrentView }: Props) => {
-  const [message, formAction] = useActionState(login, null)
-
+export default function Login({ setCurrentView }: LoginProps) {
   return (
-    <div
-      className="max-w-sm w-full flex flex-col items-center"
-      data-testid="login-page"
-    >
-      <h1 className="text-large-semi uppercase mb-6">Welcome back</h1>
-      <p className="text-center text-base-regular text-ui-fg-base mb-8">
-        Sign in to access an enhanced shopping experience.
-      </p>
-      <form className="w-full" action={formAction}>
-        <div className="flex flex-col w-full gap-y-2">
-          <Input
-            label="Email"
-            name="email"
-            type="email"
-            title="Enter a valid email address."
-            autoComplete="email"
-            required
-            data-testid="email-input"
-          />
-          <Input
-            label="Password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            data-testid="password-input"
-          />
+    <main className="min-h-screen">
+      <Section
+        variant="white"
+        className="min-h-screen flex items-center justify-center py-12"
+      >
+        <div className="w-full max-w-md mx-auto px-4">
+          {/* Header Section */}
+          <div className="text-center mb-8">
+            <div className="mb-6">
+              <h1 className="text-2xl font-light text-soil-charcoal mb-2">
+                Let's keep this simple.
+              </h1>
+              <p className="text-muted text-sm leading-relaxed">
+                Enter your phone number and we'll send you a one-time code.
+              </p>
+            </div>
+          </div>
+
+          {/* Login Form */}
+          <LoginForm setCurrentView={setCurrentView} />
+
+          {/* Additional Info */}
+          <div className="mt-8 text-center">
+            <p className="text-xs text-muted leading-relaxed">
+              New to SoilStories? No worries — we'll create your account
+              automatically.
+            </p>
+          </div>
         </div>
-        <ErrorMessage error={message} data-testid="login-error-message" />
-        <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
-          Sign in
-        </SubmitButton>
-      </form>
-      <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Not a member?{" "}
-        <button
-          onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
-          className="underline"
-          data-testid="register-button"
-        >
-          Join us
-        </button>
-        .
-      </span>
-    </div>
+      </Section>
+    </main>
   )
 }
-
-export default Login

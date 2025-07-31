@@ -1,18 +1,19 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-
-interface User {
-  id: string
-  name: string
-  email: string
-  phone: string
-}
+import { retrieveCustomer } from "@lib/data/customer"
+import { HttpTypes } from "@medusajs/types"
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react"
 
 interface AuthContextType {
-  user: User | null
+  customer: HttpTypes.StoreCustomer | null
   isLoggedIn: boolean
-  login: (user: User) => void
+  login: (customer: HttpTypes.StoreCustomer) => void
   logout: () => void
   isLoading: boolean
 }
@@ -20,20 +21,21 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [customer, setCustomer] = useState<HttpTypes.StoreCustomer | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check for existing session on mount
     const checkAuth = async () => {
       try {
-        // This would typically check localStorage, cookies, or make an API call
-        const savedUser = localStorage.getItem("user")
-        if (savedUser) {
-          setUser(JSON.parse(savedUser))
+        const customer = await retrieveCustomer()
+        if (customer) {
+          setCustomer(customer)
+        } else {
+          setCustomer(null)
         }
-      } catch (error) {
-        console.error("Auth check failed:", error)
+      } catch (err) {
+        console.error("Failed to retrieve customer:", err)
+        setCustomer(null)
       } finally {
         setIsLoading(false)
       }
@@ -42,21 +44,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth()
   }, [])
 
-  const login = (userData: User) => {
-    setUser(userData)
-    localStorage.setItem("user", JSON.stringify(userData))
+  const login = (customer: HttpTypes.StoreCustomer) => {
+    console.log(customer, 'customer');
+    
+    setCustomer(customer)
   }
 
   const logout = () => {
-    setUser(null)
-    localStorage.removeItem("user")
-    // Redirect to home page
-    window.location.href = "/"
+    setCustomer(null)
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("customer")
+      window.location.href = "/"
+    }
   }
 
-  const value = {
-    user,
-    isLoggedIn: !!user,
+  const value: AuthContextType = {
+    customer,
+    isLoggedIn: !!customer,
     login,
     logout,
     isLoading,
@@ -67,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext)
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useAuth must be used within an AuthProvider")
   }
   return context

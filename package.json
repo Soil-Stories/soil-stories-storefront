@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
+    "@hookform/resolvers": "^5.2.0",
     "@medusajs/js-sdk": "latest",
     "@medusajs/ui": "latest",
     "@radix-ui/react-accordion": "^1.2.1",
@@ -23,6 +24,7 @@
     "@stripe/react-stripe-js": "^1.7.2",
     "@stripe/stripe-js": "^1.29.0",
     "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.23.9",
     "lodash": "^4.17.21",
     "lucide-react": "^0.525.0",
     "next": "^15.3.1",
@@ -33,9 +35,13 @@
     "react-country-flag": "^3.1.0",
     "react-day-picker": "^9.8.1",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-hook-form": "^7.61.1",
+    "react-phone-number-input": "^3.4.12",
     "server-only": "^0.0.1",
     "tailwindcss-radix": "^2.8.0",
-    "webpack": "^5"
+    "webpack": "^5",
+    "zod": "^4.0.10",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",

@@ -15,6 +15,59 @@ import {
   setAuthToken,
 } from "./cookies"
 
+export const authenticateWithPhone = async (phone: string) => {
+  try {
+    console.log('here', phone);
+    const response = await sdk.auth.login("customer", "phone-auth", {
+      phone,
+    })
+
+    if (
+      typeof response === "string" ||
+      !response.location ||
+      response.location !== "otp"
+    ) {
+      throw new Error("Failed to login")
+    }
+
+    return true
+  } catch (error: any) {
+    return error.toString()
+  }
+}
+
+export const verifyOtp = async ({
+  otp,
+  phone,
+}: {
+  otp: string
+  phone: string
+}): Promise<HttpTypes.StoreCustomer | null> => {
+  try {
+    console.log("Calling sdk.auth.callback with", { phone, otp })
+
+    const token = await sdk.auth.callback("customer", "phone-auth", {
+      phone,
+      otp,
+    })
+
+    console.log(token, "token")
+
+    await setAuthToken(token)
+
+    const customerCacheTag = await getCacheTag("customers")
+    revalidateTag(customerCacheTag)
+    console.log(customerCacheTag, "customerCacheTag")
+
+    await transferCart()
+
+    return retrieveCustomer()
+  } catch (e: any) {
+    console.error("verifyOtp error:", e)
+    return e.toString()
+  }
+}
+
 export const retrieveCustomer =
   async (): Promise<HttpTypes.StoreCustomer | null> => {
     const authHeaders = await getAuthHeaders()

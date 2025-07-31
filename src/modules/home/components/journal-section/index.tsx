@@ -7,6 +7,7 @@ import { SectionHeader } from "@components/ui/section-header"
 import { Card, CardContent } from "@components/ui/card"
 import { Badge } from "@components/ui/badge"
 import { Button } from "@components/ui/button"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 interface Article {
   id: string
@@ -69,7 +70,7 @@ function ArticleCard({ article, featured = false }: { article: Article; featured
     <Card
       className={`group h-full overflow-hidden hover:shadow-medium transition-all duration-300 bg-white ${featured ? "md:col-span-2 md:row-span-2" : ""}`}
     >
-      <Link href={`/journal/${article.id}`} className="block h-full">
+      <LocalizedClientLink href={`/journal/${article.id}`} className="block h-full">
         <div className={`relative overflow-hidden ${featured ? "h-64 md:h-80" : "h-48"}`}>
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
@@ -111,7 +112,7 @@ function ArticleCard({ article, featured = false }: { article: Article; featured
           {/* Author */}
           <p className="text-sm font-medium text-soil-charcoal">By {article.author}</p>
         </CardContent>
-      </Link>
+      </LocalizedClientLink>
     </Card>
   )
 }
@@ -148,10 +149,10 @@ export function JournalSection() {
       {/* CTA Section */}
       <div className="flex flex-col items-center text-center">
         <Button asChild size="lg" variant="secondary" className="group">
-          <Link href="/journal" className="inline-flex items-center">
+          <LocalizedClientLink href="/journal" className="inline-flex items-center">
             Read All Articles
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </LocalizedClientLink>
         </Button>
         <p className="mt-4 text-sm text-muted">
           Explore our complete collection of stories, insights, and cultural perspectives
